@@ -13,7 +13,7 @@ var serviciosRouter = require('./routes/servicios'); // routes/servicios.js  pas
 var galeriaRouter = require('./routes/galeria'); // routes/galeria.js  paso 1
 var novedadesRouter = require('./routes/novedades'); // routes/novedades.js  paso 1
 var contactoRouter = require('./routes/contacto'); // routes/contacto.js  paso 1
-
+var loginRouter = require('./routes/admin/login'); // routes/admin/login.js  paso 1
 
 var app = express();
 
@@ -34,6 +34,7 @@ app.use('/servicios', serviciosRouter); // paso 2
 app.use('/galeria', galeriaRouter); // paso 2
 app.use('/novedades', novedadesRouter); // paso 2
 app.use('/contacto', contactoRouter); // paso 2
+app.use('/admin/login', loginRouter); // paso 2
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

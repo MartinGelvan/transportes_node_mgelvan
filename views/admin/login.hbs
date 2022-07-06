@@ -1,14 +1,14 @@
 <div class="container margenes">
     <div class="row">
         <div class="col">
-            <form action="">
+            <form action="/admin/login" method="post">
                 <div class="mb-3">
 
-                    <input type="text" class="form-control" placeholder="Usuario">
+                    <input type="text" class="form-control" placeholder="Usuario" name="usuario">
                 </div>
                 <div class="mb-3">
 
-                    <input type="password" class="form-control" placeholder="Contraseña">
+                    <input type="password" class="form-control" placeholder="Contraseña" name="password">
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary mb-3">Ingresar</button>
@@ -17,6 +17,9 @@
 
 
             </form>
+            {{#if error}}
+            <p>usuario y/o contraseña mal</p>
+            {{/if}}
         </div>
     </div>
 

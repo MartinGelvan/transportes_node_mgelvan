@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 require('dotenv').config(); // para que cargue los datos del archivo env
+var session = require('express-session')
 
 var indexRouter = require('./routes/index'); // routes/index.js
 //var usersRouter = require('./routes/users');
@@ -14,6 +15,7 @@ var galeriaRouter = require('./routes/galeria'); // routes/galeria.js  paso 1
 var novedadesRouter = require('./routes/novedades'); // routes/novedades.js  paso 1
 var contactoRouter = require('./routes/contacto'); // routes/contacto.js  paso 1
 var loginRouter = require('./routes/admin/login'); // routes/admin/login.js  paso 1
+var adminRouter = require('./routes/admin/novedades'); // routes/admin/novedades.js  paso 1
 
 var app = express();
 
@@ -27,6 +29,26 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  secret:'gfjhgfjhfg76767',
+  cookie:{MaxAge:null},
+  resave:false,
+  saveUninitialized:true
+}))
+
+secured = async(req,res,next)=>{
+  try{
+    console.log(req.session.id_usuario);
+    if(req.session.id_usuario){
+      next();
+    }else{
+      res.redirect('/admin/login')
+    }
+  }catch(error){
+    console.log(error);
+  }
+}
+
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 app.use('/nosotros', nosotrosRouter); // paso 2
@@ -35,6 +57,7 @@ app.use('/galeria', galeriaRouter); // paso 2
 app.use('/novedades', novedadesRouter); // paso 2
 app.use('/contacto', contactoRouter); // paso 2
 app.use('/admin/login', loginRouter); // paso 2
+app.use('/admin/novedades', secured,adminRouter); // paso 2
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

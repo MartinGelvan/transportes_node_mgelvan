@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
+var novedadesModel = require('../../models/novedadesModel');
 
-
-router.get('/',function(req,res,next){
+router.get('/',async function(req,res,next){
+    var novedades = await novedadesModel.getNovedades();
     res.render('admin/novedades',{
         layout:'admin/layout', //admin/layout.hbs
-        persona:req.session.nombre //flavia 
+        persona:req.session.nombre,//flavia 
+        novedades
     }); //view/admin/novedades.hbs
 })
 
